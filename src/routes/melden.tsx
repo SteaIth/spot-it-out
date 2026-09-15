@@ -21,7 +21,7 @@ export const Route = createFileRoute("/melden")({
       },
     ],
   }),
-  component: NewReport;
+  component: NewReport,
 });
 
 function NewReport() {
