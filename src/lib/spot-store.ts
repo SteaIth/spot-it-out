@@ -232,7 +232,7 @@ export function addReport(input: {
   description: string;
   category: Category;
   location: string;
-  photo?: string;
+  photo?: string | undefined;
 }) {
   const id = `m-${1013 + reports.length}`;
   const report: Report = {
