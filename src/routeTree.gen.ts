@@ -10,33 +10,79 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as MeldenRouteImport } from './routes/melden'
+import { Route as MeldingenIndexRouteImport } from './routes/meldingen.index'
+import { Route as MeldingenIdRouteImport } from './routes/meldingen.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeldenRoute = MeldenRouteImport.update({
+  id: '/melden',
+  path: '/melden',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeldingenIndexRoute = MeldingenIndexRouteImport.update({
+  id: '/meldingen/',
+  path: '/meldingen/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeldingenIdRoute = MeldingenIdRouteImport.update({
+  id: '/meldingen/$id',
+  path: '/meldingen/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/melden': typeof MeldenRoute
+  '/meldingen/$id': typeof MeldingenIdRoute
+  '/meldingen/': typeof MeldingenIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/melden': typeof MeldenRoute
+  '/meldingen/$id': typeof MeldingenIdRoute
+  '/meldingen': typeof MeldingenIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/melden': typeof MeldenRoute
+  '/meldingen/$id': typeof MeldingenIdRoute
+  '/meldingen/': typeof MeldingenIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/dashboard' | '/melden' | '/meldingen/$id' | '/meldingen/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/dashboard' | '/melden' | '/meldingen/$id' | '/meldingen'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/melden'
+    | '/meldingen/$id'
+    | '/meldingen/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
+  MeldenRoute: typeof MeldenRoute
+  MeldingenIdRoute: typeof MeldingenIdRoute
+  MeldingenIndexRoute: typeof MeldingenIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +94,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/melden': {
+      id: '/melden'
+      path: '/melden'
+      fullPath: '/melden'
+      preLoaderRoute: typeof MeldenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meldingen/': {
+      id: '/meldingen/'
+      path: '/meldingen'
+      fullPath: '/meldingen/'
+      preLoaderRoute: typeof MeldingenIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meldingen/$id': {
+      id: '/meldingen/$id'
+      path: '/meldingen/$id'
+      fullPath: '/meldingen/$id'
+      preLoaderRoute: typeof MeldingenIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
+  MeldenRoute: MeldenRoute,
+  MeldingenIdRoute: MeldingenIdRoute,
+  MeldingenIndexRoute: MeldingenIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
